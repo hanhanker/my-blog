@@ -1,0 +1,21 @@
+<% include header.html %>
+			<div class="col-sm-9">
+				<h2><%= message %></h2>
+				<p><span id="msg" style="color: red">3</span> 后返回首页</p>
+			</div>
+		</div>
+	</div>
+<% include footer.html %>
+<script type="text/javascript">
+	console.log('success');
+	var t = 3;
+	setInterval(function(){
+		document.getElementById('msg').innerHTML = t--;
+	}, 1000);
+
+	setTimeout(function(){
+		document.getElementById('back').click();
+	}, 3000);
+	
+	
+</script>

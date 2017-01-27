@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>管理员登陆</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<!-- 引入核心css文件 -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<!-- 还需要在引入js文件之前，引入依赖文件jquery -->
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<!-- 引入js核心文件-->
+	<script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container">	
+		<div class="col-md-4 col-md-offset-4">
+		<form action="/user/login" method="post">
+			<div class="form-group">
+				<label for="">用户名</label>
+				<input type="text" class="form-control" name="username">
+				
+			<div class="form-group">
+				<label for="">密码</label>
+				<input type="password" class="form-control" name="password">
+			</div>
+			<div>
+				<button class="btn btn-primary">登陆</button>
+			</div>
+		</form>	
+		</div>
+	</div>
+</body>
+</html>

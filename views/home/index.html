@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>菜鸟博客</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<style>
+		body {padding-top: 50px; background: #f2f2f2;}
+		.main {margin-top: 20px;}
+		.main-left {background: #fff; padding-top: 20px;}
+		.media-left img {width: 280px; height: 180px;}
+		.media {margin-top: 20px; border-bottom: 1px dotted #ddd; padding-bottom: 20px;}
+		.media-body {color: #666;}
+		.media-body ul {margin: 10px 0;}
+		.media-body h2 {font-size: 24px; font-family: "微软雅黑"}
+		.hot li {line-height: 26px;}
+		.footer {background: #222; color: #999; padding-top: 20px; margin-top: 20px; font-size: 12px;}
+		.search-box{
+			position: relative;
+		}
+		.search-items{
+			position: absolute;
+			width: 300px;
+			background-color: #fff;
+			padding: 10px 20px;
+			top: 30px;
+			right: 0px;
+		}
+		/*自己编写媒体查询*/
+		@media screen and (max-width: 768px) {
+			.media-left, .media-body {display: block!important; margin-top: 20px;}
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">菜鸟博客</a>
+				<button class="navbar-toggle" data-target="#menu" data-toggle="collapse">
+					<spna class="icon-bar"></spna>
+					<spna class="icon-bar"></spna>
+					<spna class="icon-bar"></spna>
+				</button>
+			</div>
+			<div id="menu" class="collapse navbar-collapse">
+				<ul class="navbar-nav nav">
+					<% for(var i = 0; i < data.length; i++) { %>
+					<li><a href="/list?title=<%= data[i].title %>"><%= data[i].title %></a></li>
+					<% } %>
+				</ul>
+				<form action="" class="navbar-form navbar-right">
+					<div class="input-group">
+						<input type="text" placeholder="输入关键字" class="form-control" id="keyword">
+						<span class="input-group-btn search-box" id="search-box">
+							<button class="btn btn-primary">搜索</button>
+						</span>
+					</div>
+				</form>
+				
+				<script type="text/javascript">
+				// ajax技术进行模糊查询
+					$(function(){
+						$('#keyword').on( 'input', function(){
+							var keyword = $(this).val();
+							$.ajax({
+								url: '/search',
+								type: 'get',
+								data: { keyword : keyword },
+								success : function( data ){
+								// console.log( data );
+								var res = '';
+								data.forEach( function(item){
+									res += '<p>' + item.keyword + '</p>';
+								});
+								$('#search-items').show().addClass('search-items').html(res);
+							}
+						});
+						});
+						$('#keyword').on('blur', function(){
+							$('#search-items').hide();
+						});
+
+					});
+					//实现滚动分页
+					$(window).on('scroll', function(){
+						if( $(window).height() + $(window).scrollTop() >= $(document).height() ){
+							
+						}
+					});
+
+				</script>
+			</div>
+			
+		</div>
+		<div id="search-items"></div>
+	</nav>
+	
+	<div>
+		<img src="/images/baner.jpg" alt="" class="img-responsive">
+	</div>
+	
+	<div class="container main">
+		<div class="row">
+			<div class="col-md-9 main-left">
+				<ul class="media-list">
+
+					<% for(var j = 0 ; j < article.length; j++){ %>
+					<li class="media">
+						<a href="/posts?id=<%= article[j]._id %>" class="media-left"><img src="<%= article[j].cover %>" alt=""></a>
+						<div class="media-body">
+							<h2 class="media-heading"><a href="/posts?id=<%= article[j]._id %>"><%= article[j].title %></a></h2>
+							<ul class="list-inline">
+								<li><span class="glyphicon glyphicon-user"></span>admin</li>
+								<li><span class="glyphicon glyphicon-time"></span><%= article[j].time.toLocaleString() %></li>
+								<li><span class="glyphicon glyphicon-eye-open"></span> <%= article[j].count%>浏览</li>
+								<li><span class="glyphicon glyphicon-comment"></span><a href="">评论一下</a></li>
+							</ul>
+							<!-- 这里不能有空格 -->
+							<p id="content"><%= article[j].summary %></p>
+						</div>
+					</li>
+					<% } %>
+				</ul>d
+				<!-- <script type="text/javascript" src="/js/markdown.min.js"></script>
+				<script type="text/javascript">
+					$('#content').html( markdown.toHTML( $('#content').html()) );
+				</script>  -->
+				<div class="text-center">
+					<ul class="pagination">
+					<li><a href="">&laquo;</a></li>
+					<li><a href="">1</a></li>
+					<li><a href="">3</a></li>
+					<li><a href="">3</a></li>
+					<li><a href="">4</a></li>
+					<li><a href="">5</a></li>
+					<li><a href="">&raquo;</a></li>
+				</ul>
+				</div>
+				
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default hot">
+					<div class="panel-heading">
+						热门文章
+					</div>
+					<div class="panel-body">
+						<ul class="list-unstyled">
+							<% for(var i = 0; i < hot.length; i++){ %>
+							<li>
+							<span class="label 
+								<% if( i < 3){ %>
+									label-danger
+								<% } else{ %>
+									label-default
+								<% } %>
+							"><%= i + 1 %></span> 
+							<a href="/posts?id=<%= hot[i]._id %>"><%= hot[i].title %></a>
+							</li>
+							<% } %>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+	<div class="footer container-fluid text-center">
+
+		<p>版权所有，保留一切权利！ 转载内容版权归作者及来源网站所有，原创内容转载请注明来源。</p>
+<p>Copyright © 2013-2014 andy, All Rights Reserved.</p>
+	</div>
+
+</body>
+</html>

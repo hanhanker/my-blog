@@ -1,0 +1,30 @@
+<% include header.html %>
+			<div class="col-sm-9">
+			<h3>分类添加</h3>
+				<ol class="breadcrumb">
+					<li><a href="#">content</a></li>
+					<li><a href="#">2013</a></li>
+					<li class="active">十一月</li>
+				</ol>
+				
+				<form action="/admin/cats/category_add" method="post">
+					<div class="form-group">
+					<label for="">标题</label>
+						<input type="text" class="form-control" name="title">
+				
+					</div>
+					<div class="form-group">
+						<label for="">排序</label>
+						<input type="text" class="form-control" name="sort">
+					</div>
+					
+					<div>
+						<button class="btn btn-primary">提交</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+<% include footer.html %>
